@@ -9,6 +9,8 @@ import groovy.util.GroovyScriptEngine;
 import groovy.util.ResourceException;
 import groovy.util.ScriptException;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.io.File;
 import java.io.IOException;
 
@@ -60,5 +62,18 @@ public class RunGroovy {
         }
         assert result.equals(Boolean.TRUE);
         System.out.println(result);
+
+        ScriptEngineManager factory = new ScriptEngineManager();
+        ScriptEngine engine1 = factory.getEngineByName("groovy");
+        engine1.put("foo",foo);
+        try {
+           result =  engine1.eval(expression);
+        } catch (javax.script.ScriptException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(result);
+
+
     }
 }
